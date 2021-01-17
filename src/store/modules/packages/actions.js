@@ -32,12 +32,9 @@ export default {
         from: size * (page - 1),
       };
 
-      console.log('req params', reqQuery, params);
-
       const res = await packages.search(reqQuery);
 
       const { data, pagination } = transformResponse(res, reqQuery);
-      console.log(pagination);
 
       commit(types.SET_LIST, data);
       commit(types.SET_PAGINATION, pagination);
@@ -45,14 +42,12 @@ export default {
       commit(types.SET_LOADING, { list: false });
     }
   },
-
-  async getByName({ commit }, name) {
-    try {
-      commit(types.SET_LOADING, { package: true });
-      const data = await packages.getByName(name);
-      console.log(data);
-    } finally {
-      commit(types.SET_LOADING, { package: false });
-    }
-  },
+  // async getByName({ commit }, name) {
+  //   try {
+  //     commit(types.SET_LOADING, { package: true });
+  //     const data = await packages.getByName(name);
+  //   } finally {
+  //     commit(types.SET_LOADING, { package: false });
+  //   }
+  // },
 };

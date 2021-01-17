@@ -16,6 +16,7 @@
         :data="packagesList"
       />
     </b-container>
+    <package-details-modal :data="selected" @hidden="selected = null" />
   </div>
 </template>
 
@@ -24,6 +25,7 @@ import { mapActions, mapState } from 'vuex';
 import { SEARCH_DELAY } from '@/config';
 import debounce from '@/utils/debounce';
 import PackagesList from '@/components/PackagesList.vue';
+import PackageDetailsModal from '@/components/PackageDetailsModal.vue';
 
 import SearchInput from '@/components/SearchInput.vue';
 
@@ -33,6 +35,7 @@ export default {
   components: {
     SearchInput,
     PackagesList,
+    PackageDetailsModal,
   },
 
   data() {
@@ -60,6 +63,7 @@ export default {
 
     clickRowHandler(index) {
       this.selected = { ...this.packagesList[index] };
+      this.$bvModal.show('packageDetailsModal');
     },
 
     changePageHandler(page) {

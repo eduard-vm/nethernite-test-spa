@@ -3,7 +3,7 @@
     <b-container class="h-100">
       <div class="h-100 d-flex justify-content-center align-items-center">
         <a href="https://github.com/eduard-vm"
-          class="d-inline-block"
+          class="d-inline-block text-light"
           aria-label="Visit my GitHub" target="_blank">
           <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23">
             <path

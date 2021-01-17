@@ -1,18 +1,59 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="home-page pt-3 pt-lg-5">
+    <b-container>
+      <search-input
+        :search-handler="searchInputHandler"
+        :loading="packagesListLoading"
+        v-model="query"
+      />
+      {{ packagesList }}
+    </b-container>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import { mapActions, mapState } from 'vuex';
+import { SEARCH_DELAY } from '@/config';
+import debounce from '@/utils/debounce';
+
+import SearchInput from '@/components/SearchInput.vue';
 
 export default {
-  name: 'Home',
+  name: 'HomePage',
+
   components: {
-    HelloWorld,
+    SearchInput,
+  },
+
+  data() {
+    return {
+      query: '',
+      loading: false,
+      selected: null,
+    };
+  },
+
+  computed: {
+    ...mapState({
+      packagesList: ({ packages }) => packages.list,
+      packagesListLoading: ({ packages }) => packages.loading.list,
+    }),
+  },
+
+  methods: {
+    ...mapActions({
+      searchPackages: 'packages/search',
+      getPackage: 'packages/getByName',
+      resetSearchPackages: 'packages/resetSearch',
+    }),
+
+    searchInputHandler: debounce(function search(query) {
+      if (query) {
+        this.searchPackages({ query });
+      } else {
+        this.resetSearchPackages();
+      }
+    }, SEARCH_DELAY),
   },
 };
 </script>
